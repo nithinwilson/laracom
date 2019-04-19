@@ -60,7 +60,7 @@ class CashOnDelivController extends Controller
 
                 $rate_id = $request->input('rate');
                 $rates = $shippingRepo->getRates($request->input('shipment_obj_id'));
-                $rate = collect($rates->results)->filter(function ($rate) use ($rate_id) {
+                $rate = collect($rates->results)->filter(function($rate) use ($rate_id) {
                     return $rate->object_id == $rate_id;
                 })->first();
 
@@ -135,7 +135,7 @@ class CashOnDelivController extends Controller
 
             $transaction = Shippo_Transaction::create($details);
 
-            if ($transaction['status'] != 'SUCCESS'){
+            if ($transaction['status'] != 'SUCCESS') {
                 Log::error($transaction['messages']);
                 return redirect()->route('checkout.index')->with('error', 'There is an error in the shipment details. Check logs.');
             }
